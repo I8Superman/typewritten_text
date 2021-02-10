@@ -1,26 +1,42 @@
 "use strict";
 
+
 // Global variables
 const qs = (s) => document.querySelector(s); // General querySelector abbriviation
-⁄
-let letterN = 0; // The N'th number of letter in texttoType
-const typeElem = qs('#typewriter'); // Element to add the text to
-const extraElem = qs('#extrainfo'); // Extra element to add the text to
-const textLength = texttoType.length; // Measuring the number of charecters in the texttoType
+
+let texttoType;// Store orignal elem text in this variable
+let letterN = 1; // The N'th number of letter in the texttoType (see typeText function below)
+const getElems = document.querySelectorAll('.typewritten'); // Get all .typewritten elems as an array
+let arrayNr = 0;
+const typeElem = getElems[arrayNr]; // Get the first element from the array
 
 function init() {
-    qs('.typewritten').textContent = ""; // Remove the text from the DOM
-    typeText(typeElem);
+    getElems.forEach(typeText);
 }
 
-function typeText(elem) {
-    elem.textContent = texttoType.substring(0, letterN); // Increase letters in string and print
-    letterN++;// Increment N
-    const randomTypeSpeed = Math.floor(Math.random() * 6) + 1;// Setting realistic variable typing speed!
-    // Check is all letters have been printed
-    if (letterN != textLength + 1) {
-        setTimeout(typeText, randomTypeSpeed * 50);
+function typeText(typeelem) {
+    console.log(typeelem);
+    texttoType = typeelem.textContent;
+    typeelem.textContent = "";
+    console.log(texttoType);
+    // typeLoop();
+}
+
+function typeLoop() {
+    console.log('typeLoop');
+    const textLength = texttoType.length; // Measuring the number of charecters in the texttoType
+    typeElem.textContent = texttoType.substring(0, letterN); // Increase letters in string and print the string
+    console.log(typeElem.textContent);
+    //console.log(letterN);
+    if (letterN != textLength) { // Check the number of letters printed is not yet the full amount
+        letterN++; // Increment N -> the number of letters to be printed next time 
+        //console.log(letterN);
+        const randomTypeSpeed = Math.floor(Math.random() * 6) + 1;// Setting realistic variable typing speed!
+        setTimeout(typeLoop, randomTypeSpeed * 50);
     } else {
+        letterN = 1;
+        typeElem.classList.remove('.typewritten');
+        typeElem.classList.add('.donetyping');
         endThings();
     }
 }
