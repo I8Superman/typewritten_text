@@ -21,12 +21,11 @@ function typeText() {
 
     if (letterN <= textLength) { // Check the number of letters printed is not yet the full amount
         letterN++; // Increment N -> the number of letters to be printed next time 
-        const randomTypeSpeed = Math.floor(Math.random() * 6) + 1;// Setting realistic variable typing speed!
-        setTimeout(typeText, randomTypeSpeed * 50);
+        const randomTypeSpeed = Math.floor(Math.random() * 8) + 1;// Setting realistic variable typing speed!
+        setTimeout(typeText, randomTypeSpeed * 40);
     } else {
         letterN = 1; // Reset letterN for next string to be printed
         arrayNr++; // Increment arrayNr to select next string in texttoType array for printing
-        console.log(letterN, arrayNr, texttoType.length);
         if (arrayNr >= texttoType.length) { // If arrayNr 
             console.log('No more elements to type!');
         } else {
